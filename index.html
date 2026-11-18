@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/future/Downloads/FirstGroup_POS.html -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="يومية المحل">
+  <title>نظام يومية المحل الذكي — المكسب • فوري • أمان • فودافون كاش • إنستا باي</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --navy: #0f172a;
+      --slate: #1e293b;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --primary: #0f766e;
+      --primary-hover: #115e59;
+      --blue: #1d4ed8;
+      --green: #15803d;
+      --green-bg: #dcfce7;
+      --red: #b91c1c;
+      --red-bg: #fee2e2;
+      --amber: #b45309;
+      --amber-bg: #fef3c7;
+      --purple: #6d28d9;
+      --purple-bg: #ede9fe;
+      --radius: 14px;
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 48px;
+    }
+
+    /* Top Header */
+    .topbar {
+      background: linear-gradient(135deg, var(--navy), var(--slate));
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      background: var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    .date-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      padding: 6px 10px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: 0.15s;
+    }
+
+    .btn-nav:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
+    .date-input {
+      background: #fef9c3;
+      color: #1e3a8a;
+      border: none;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .day-badge {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 18px auto;
+      padding: 0 14px;
+    }
+
+    /* 4-Card Permanent Accounting Comparison Bar */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .comp-card.base { border-top: 4px solid #334155; }
+    .comp-card.open { border-top: 4px solid var(--blue); }
+    .comp-card.close { border-top: 4px solid var(--primary); }
+    .comp-card.audit { border-top: 4px solid var(--green); }
+    .comp-card.audit.has-diff { border-top: 4px solid var(--red); background: #fffafa; }
+
+    .comp-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .comp-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .comp-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      background: #e2e8f0;
+      color: var(--navy);
+      border: none;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .mini-btn:hover { background: #cbd5e1; }
+
+    /* Accounts Cards Grid */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-header h2 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .action-bar-top {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-close-day {
+      background: #b91c1c;
+      color: #fff;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.25);
+    }
+
+    .btn-close-day:hover { background: #991b1b; }
+
+    .btn-settings {
+      background: var(--slate);
+      color: #fff;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .accounts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .acc-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    .acc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .acc-card.selected {
+      border-color: var(--primary);
+      background: #f0fdfa;
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
+    }
+
+    .acc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .acc-name {
+      font-weight: 800;
+      font-size: 0.96rem;
+    }
+
+    .acc-tag {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+
+    .tag-pos { background: #fef3c7; color: #92400e; }
+    .tag-wallet { background: #ede9fe; color: #5b21b6; }
+    .tag-drawer { background: #dcfce7; color: #166534; }
+
+    .acc-balance {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .acc-meta {
+      font-size: 0.74rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .low-alert {
+      margin-top: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-bg);
+      padding: 3px 7px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    /* Push-Button POS Terminal */
+    .pos-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .step-group {
+      margin-bottom: 16px;
+    }
+
+    .step-label {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--slate);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .push-btn {
+      padding: 12px 10px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: 0.12s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .push-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .push-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(15, 118, 110, 0.28);
+    }
+
+    .push-btn.active-blue {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .push-btn.active-amber {
+      background: #d97706;
+      color: #fff;
+      border-color: #d97706;
+    }
+
+    .amount-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .amount-row { grid-template-columns: 1fr; }
+    }
+
+    .input-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .quick-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill-btn {
+      background: #fff;
+      border: 1px solid #94a3b8;
+      color: var(--navy);
+      padding: 7px 11px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+
+    .pill-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .pill-btn.clear {
+      background: var(--red-bg);
+      color: var(--red);
+      border-color: #fca5a5;
+    }
+
+    .num-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      background: #fff;
+      margin-top: 6px;
+    }
+
+    .num-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .extras-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .extras-row { grid-template-columns: 1fr; }
+    }
+
+    .explain-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.32);
+      transition: 0.15s;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #115e59, #0f766e);
+      transform: translateY(-1px);
+    }
+
+    /* Navigation Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .tab-btn.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+
+    .tab-content {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    th {
+      background: var(--slate);
+      color: #fff;
+      padding: 10px 8px;
+      text-align: center;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 9px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    tr:nth-child(even) { background: #f8fafc; }
+
+    .pos-val { color: var(--green); font-weight: 800; }
+    .neg-val { color: var(--red); font-weight: 800; }
+
+    .btn-del {
+      background: var(--red-bg);
+      color: var(--red);
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-pay {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid #86efac;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .modal-close {
+      background: #e2e8f0;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .audit-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.86rem;
+    }
+
+    .audit-input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #94a3b8;
+      border-radius: 8px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy);
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      z-index: 200;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">💳</div>
+      <div>
+        <h1>يومية المحل الذكية (الترحيل التلقائي)</h1>
+        <p>المكسب • فوري • أمان • فودافون كاش • إنستا باي</p>
+      </div>
+    </div>
+
+    <div class="date-controls">
+      <button class="btn-nav" onclick="changeDay(-1)">◀ اليوم السابق</button>
+      <input type="date" id="currentDate" class="date-input" onchange="renderAll()">
+      <button class="btn-nav" onclick="goToday()">اليوم الحالي</button>
+      <button class="btn-nav" onclick="changeDay(1)">اليوم التالي ▶</button>
+      <span id="dayNameBadge" class="day-badge">الأربعاء</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Permanent Accounting Comparison Bar (Base vs Opening vs Closing vs Shortage Check) -->
+    <section class="comparison-grid">
+      <div class="comp-card base">
+        <div class="comp-title">
+          <span>🏛️ إجمالي الرصيد الأساسي (رأس المال)</span>
+          <button class="mini-btn" onclick="openBaseModal()">⚙️ تعديل</button>
+        </div>
+        <div class="comp-value" id="kpiBaseTotal">98,000.00 ج.م</div>
+        <div class="comp-sub">
+          <span>خط الأساس الثابت لجميع الحسابات</span>
+        </div>
+      </div>
+
+      <div class="comp-card open">
+        <div class="comp-title">
+          <span>🌅 الرصيد الافتتاحي لليوم</span>
+          <span style="font-size:0.72rem; color:#1d4ed8;">مرحل تلقائيًا</span>
+        </div>
+        <div class="comp-value" id="kpiOpenTotal">98,000.00 ج.م</div>
+        <div class="comp-sub">
+          <span id="kpiOpenNote">ختامي الأيام السابقة</span>
+        </div>
+      </div>
+
+      <div class="comp-card close">
+        <div class="comp-title">
+          <span>🌇 الرصيد الختامي لليوم</span>
+          <span id="kpiProfitBadge" style="color:#0f766e; font-weight:800;">+40.50 عمولة اليوم</span>
+        </div>
+        <div class="comp-value" id="kpiCloseTotal">98,040.50 ج.م</div>
+        <div class="comp-sub">
+          <span id="kpiCreditNote">الآجل غير المحصل: 0.00 ج.م</span>
+        </div>
+      </div>
+
+      <div class="comp-card audit" id="kpiAuditCard">
+        <div class="comp-title">
+          <span>⚖️ المقارنة وكشف العجز</span>
+          <button class="mini-btn" style="background:#fee2e2; color:#b91c1c;" onclick="openCloseDayModal()">🔒 تقفيل اليوم</button>
+        </div>
+        <div class="comp-value" id="kpiAuditStatus" style="font-size:1.05rem; color:#15803d;">✓ سليم 100% — لا يوجد عجز</div>
+        <div class="comp-sub">
+          <span id="kpiBaseDiff">نمو رأس المال عن الأساسي: +40.50 ج.م</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Individual Account Cards -->
+    <div class="section-header">
+      <h2>📊 أرصدة الماكينات والمحافظ والدرج (اضغط على أي حساب لاختياره)</h2>
+      <div class="action-bar-top">
+        <button class="btn-settings" onclick="openBaseModal()">⚙️ ضبط أرصدة البداية / إنستا باي</button>
+        <button class="btn-close-day" onclick="openCloseDayModal()">🔒 تقفيل اليوم ومطابقة الجرد</button>
+      </div>
+    </div>
+
+    <section class="accounts-grid" id="accountsGrid">
+          <div class="acc-card " onclick="selectService('maksab')">
+            <div class="acc-top">
+              <span class="acc-name">مكسب</span>
+              <span class="acc-tag tag-pos">ماكينة</span>
+            </div>
+            <div class="acc-balance">9,815.50 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 10,000.00</span>
+              <span style="color:#b91c1c; font-weight:700;">-184.50</span>
+            </div>
+            
+          </div>
+        
+          <div class="acc-card " onclick="selectService('fawry')">
+            <div class="acc-top">
+              <span class="acc-name">فوري</span>
+              <span class="acc-tag tag-pos">ماكينة</span>
+            </div>
+            <div class="acc-balance">5,000.00 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 5,000.00</span>
+              <span style="color:#15803d; font-weight:700;">+0.00</span>
+            </div>
+            
+          </div>
+        
+          <div class="acc-card " onclick="selectService('aman')">
+            <div class="acc-top">
+              <span class="acc-name">أمان</span>
+              <span class="acc-tag tag-pos">ماكينة</span>
+            </div>
+            <div class="acc-balance">2,805.00 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 3,000.00</span>
+              <span style="color:#b91c1c; font-weight:700;">-195.00</span>
+            </div>
+            
+          </div>
+        
+          <div class="acc-card selected" onclick="selectService('vfcash')">
+            <div class="acc-top">
+              <span class="acc-name">فودافون كاش</span>
+              <span class="acc-tag tag-wallet">محفظة</span>
+            </div>
+            <div class="acc-balance">63,150.00 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 65,000.00</span>
+              <span style="color:#b91c1c; font-weight:700;">-1,850.00</span>
+            </div>
+            
+          </div>
+        
+          <div class="acc-card " onclick="selectService('instapay')">
+            <div class="acc-top">
+              <span class="acc-name">إنستا باي</span>
+              <span class="acc-tag tag-wallet">إنستا باي</span>
+            </div>
+            <div class="acc-balance">5,000.00 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 5,000.00</span>
+              <span style="color:#15803d; font-weight:700;">+0.00</span>
+            </div>
+            
+          </div>
+        
+          <div class="acc-card " onclick="selectService('drawer')">
+            <div class="acc-top">
+              <span class="acc-name">كاش الدرج</span>
+              <span class="acc-tag tag-drawer">الخزنة</span>
+            </div>
+            <div class="acc-balance">12,270.00 <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: 10,000.00</span>
+              <span style="color:#15803d; font-weight:700;">+2,270.00</span>
+            </div>
+            
+          </div>
+        </section>
+
+    <!-- 3. Push-Button POS Entry Terminal -->
+    <section class="pos-panel">
+      <div class="step-group">
+        <div class="step-label"><span class="step-num">1</span> اختر الماكينة أو المحفظة:</div>
+        <div class="btn-grid" id="serviceButtons"><button type="button" class="push-btn " onclick="selectService('maksab')">مكسب</button><button type="button" class="push-btn " onclick="selectService('fawry')">فوري</button><button type="button" class="push-btn " onclick="selectService('aman')">أمان</button><button type="button" class="push-btn active" onclick="selectService('vfcash')">فودافون كاش</button><button type="button" class="push-btn " onclick="selectService('instapay')">إنستا باي</button><button type="button" class="push-btn " onclick="selectService('drawer')">كاش الدرج</button></div>
+      </div>
+
+      <div class="step-group">
+        <div class="step-label"><span class="step-num">2</span> اختر نوع العملية:</div>
+        <div class="btn-grid" id="opButtons"><button type="button" class="push-btn active-blue" onclick="selectOp('تحويل صادر')">تحويل صادر</button><button type="button" class="push-btn " onclick="selectOp('سحب وارد')">سحب وارد</button><button type="button" class="push-btn " onclick="selectOp('إضافة رصيد')">إضافة رصيد</button></div>
+      </div>
+
+      <div class="amount-row">
+        <div class="input-box">
+          <div class="step-label"><span class="step-num">3</span> المبلغ (ج.م) — اضغط للجمع السريع أو اكتب:</div>
+          <input type="number" id="txAmount" class="num-input" placeholder="0" step="any" oninput="updateExplain()">
+          <div class="quick-pills">
+            <button type="button" class="pill-btn" onclick="addAmount(50)">+50</button>
+            <button type="button" class="pill-btn" onclick="addAmount(100)">+100</button>
+            <button type="button" class="pill-btn" onclick="addAmount(200)">+200</button>
+            <button type="button" class="pill-btn" onclick="addAmount(500)">+500</button>
+            <button type="button" class="pill-btn" onclick="addAmount(1000)">+1000</button>
+            <button type="button" class="pill-btn" onclick="addAmount(2000)">+2000</button>
+            <button type="button" class="pill-btn clear" onclick="setAmount(0)">مسح</button>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="step-label"><span class="step-num">4</span> العمولة / ربحك (ج.م):</div>
+          <input type="number" id="txComm" class="num-input" placeholder="0" step="any" oninput="updateExplain()">
+          <div class="quick-pills">
+            <button type="button" class="pill-btn" onclick="setComm(0)">0 (بدون)</button>
+            <button type="button" class="pill-btn" onclick="setComm(2.5)">2.5</button>
+            <button type="button" class="pill-btn" onclick="setComm(5)">5</button>
+            <button type="button" class="pill-btn" onclick="setComm(10)">10</button>
+            <button type="button" class="pill-btn" onclick="setComm(15)">15</button>
+            <button type="button" class="pill-btn" onclick="setComm(20)">20</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="extras-row">
+        <div class="input-box">
+          <div class="step-label">طريقة السداد:</div>
+          <div class="btn-grid" style="grid-template-columns: 1fr 1fr;">
+            <button type="button" id="payCashBtn" class="push-btn active" onclick="setPayMethod('cash')">💵 كاش (بالدرج)</button>
+            <button type="button" id="payCreditBtn" class="push-btn " onclick="setPayMethod('credit')">📝 آجل (على الحساب)</button>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="step-label">رقم المحفظة / حساب إنستا (اختياري):</div>
+          <input type="text" id="txPhone" class="num-input" style="font-size:0.95rem;" placeholder="مثال: 01008235456">
+        </div>
+
+        <div class="input-box">
+          <div class="step-label">اسم العميل / ملاحظات (اختياري):</div>
+          <input type="text" id="txNote" class="num-input" style="font-size:0.95rem;" placeholder="مثال: أمير">
+        </div>
+      </div>
+
+      <div class="explain-banner" id="explainBanner">💡 محدد الآن: <strong>فودافون كاش</strong> (تحويل صادر) — أدخل المبلغ لحساب التأثير التلقائي.</div>
+
+      <button type="button" class="btn-submit" onclick="saveTransaction()">✅ تسجيل العملية الآن</button>
+    </section>
+
+    <!-- 4. Bottom Tabs: Daily Log, Deferred Credit, Reports & Backup -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tabLog', this)">📋 سجل حركات اليوم (<span id="todayCountBadge">10</span>)</button>
+      <button class="tab-btn" onclick="switchTab('tabCredit', this)">👥 متابعة الآجل والعملاء (<span id="creditCountBadge">0</span>)</button>
+      <button class="tab-btn" onclick="switchTab('tabReports', this)">📈 ملخص الأرباح والخدمات</button>
+      <button class="tab-btn" onclick="switchTab('tabBackup', this)">💾 النسخ الاحتياطي وتصدير الإكسل</button>
+    </div>
+
+    <!-- Tab 1: Daily Log -->
+    <div id="tabLog" class="tab-content active">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>م</th>
+              <th>الخدمة / المحفظة</th>
+              <th>نوع العملية</th>
+              <th>المبلغ</th>
+              <th>العمولة</th>
+              <th>السداد</th>
+              <th>الرقم / العميل</th>
+              <th>تأثير الدرج</th>
+              <th>حذف</th>
+            </tr>
+          </thead>
+          <tbody id="logTableBody">
+          <tr>
+            <td>1</td>
+            <td style="font-weight:800;">أمان</td>
+            <td>كهرباء</td>
+            <td style="font-weight:700;">195.00</td>
+            <td style="color:#0f766e; font-weight:700;">5.00</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+200.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(1)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td style="font-weight:800;">مكسب</td>
+            <td>باقة</td>
+            <td style="font-weight:700;">22.50</td>
+            <td style="color:#0f766e; font-weight:700;">2.50</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+25.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(2)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td style="font-weight:800;">مكسب</td>
+            <td>باقة</td>
+            <td style="font-weight:700;">22.50</td>
+            <td style="color:#0f766e; font-weight:700;">2.50</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+25.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(3)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>4</td>
+            <td style="font-weight:800;">مكسب</td>
+            <td>باقة</td>
+            <td style="font-weight:700;">65.00</td>
+            <td style="color:#0f766e; font-weight:700;">5.00</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+70.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(4)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>5</td>
+            <td style="font-weight:800;">مكسب</td>
+            <td>باقة</td>
+            <td style="font-weight:700;">52.00</td>
+            <td style="color:#0f766e; font-weight:700;">3.00</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+55.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(5)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>6</td>
+            <td style="font-weight:800;">مكسب</td>
+            <td>باقة</td>
+            <td style="font-weight:700;">22.50</td>
+            <td style="color:#0f766e; font-weight:700;">2.50</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+25.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(6)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>7</td>
+            <td style="font-weight:800;">فودافون كاش</td>
+            <td>تحويل صادر</td>
+            <td style="font-weight:700;">400.00</td>
+            <td style="color:#0f766e; font-weight:700;">5.00</td>
+            <td>💵 كاش</td>
+            <td>أمير - 01008235456</td>
+            <td class="pos-val">+405.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(7)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>8</td>
+            <td style="font-weight:800;">فودافون كاش</td>
+            <td>تحويل صادر</td>
+            <td style="font-weight:700;">650.00</td>
+            <td style="color:#0f766e; font-weight:700;">0.00</td>
+            <td>💵 كاش</td>
+            <td>أمير - 01008235456</td>
+            <td class="pos-val">+650.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(8)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>9</td>
+            <td style="font-weight:800;">فودافون كاش</td>
+            <td>سحب وارد</td>
+            <td style="font-weight:700;">200.00</td>
+            <td style="color:#0f766e; font-weight:700;">5.00</td>
+            <td>💵 كاش</td>
+            <td>أمير - 01008235456</td>
+            <td class="neg-val">-195.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(9)">حذف</button></td>
+          </tr>
+        
+          <tr>
+            <td>10</td>
+            <td style="font-weight:800;">فودافون كاش</td>
+            <td>تحويل صادر</td>
+            <td style="font-weight:700;">1,000.00</td>
+            <td style="color:#0f766e; font-weight:700;">10.00</td>
+            <td>💵 كاش</td>
+            <td>-</td>
+            <td class="pos-val">+1,010.00</td>
+            <td><button class="btn-del" onclick="deleteTransaction(1795027852982)">حذف</button></td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 2: Customer Credit / Deferred -->
+    <div id="tabCredit" class="tab-content">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>اسم العميل</th>
+              <th>الرقم</th>
+              <th>الخدمة / البيان</th>
+              <th>المبلغ المستحق</th>
+              <th>الحالة</th>
+              <th>إجراء السداد</th>
+            </tr>
+          </thead>
+          <tbody id="creditTableBody"><tr><td colspan="7" style="padding:18px; color:var(--muted); font-weight:700;">لا توجد حسابات آجلة مسجلة.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 3: Service & Profit Summary -->
+    <div id="tabReports" class="tab-content">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الخدمة / المحفظة</th>
+              <th>عدد العمليات (اليوم)</th>
+              <th>حجم التعاملات (اليوم)</th>
+              <th>أرباح اليوم (العمولة)</th>
+              <th>إجمالي أرباح كل الأيام</th>
+            </tr>
+          </thead>
+          <tbody id="reportTableBody">
+          <tr>
+            <td style="font-weight:800;">مكسب</td>
+            <td>5</td>
+            <td>184.50 ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">15.50 ج.م</td>
+            <td style="font-weight:800;">15.50 ج.م</td>
+          </tr>
+        
+          <tr>
+            <td style="font-weight:800;">فوري</td>
+            <td>0</td>
+            <td>0.00 ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">0.00 ج.م</td>
+            <td style="font-weight:800;">0.00 ج.م</td>
+          </tr>
+        
+          <tr>
+            <td style="font-weight:800;">أمان</td>
+            <td>1</td>
+            <td>195.00 ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">5.00 ج.م</td>
+            <td style="font-weight:800;">5.00 ج.م</td>
+          </tr>
+        
+          <tr>
+            <td style="font-weight:800;">فودافون كاش</td>
+            <td>4</td>
+            <td>2,250.00 ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">20.00 ج.م</td>
+            <td style="font-weight:800;">20.00 ج.م</td>
+          </tr>
+        
+          <tr>
+            <td style="font-weight:800;">إنستا باي</td>
+            <td>0</td>
+            <td>0.00 ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">0.00 ج.م</td>
+            <td style="font-weight:800;">0.00 ج.م</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 4: Backup & Excel Export -->
+    <div id="tabBackup" class="tab-content">
+      <p style="margin-bottom:12px; color:var(--muted); font-weight:700;">
+        تُحفظ بياناتك تلقائيًا داخل متصفح جوجل كروم على هذا الجهاز. يمكنك تصدير نسخة إكسل (CSV) أو حفظ نسخة احتياطية كاملة في أي وقت:
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-settings" style="background:#0f766e;" onclick="exportCSV()">📥 تصدير السجل بصيغة Excel (CSV)</button>
+        <button class="btn-settings" style="background:#1d4ed8;" onclick="exportJSON()">💾 حفظ نسخة احتياطية كاملة (JSON)</button>
+        <label class="btn-settings" style="background:#475569; cursor:pointer;">
+          📂 استرجاع نسخة احتياطية
+          <input type="file" accept=".json" style="display:none;" onchange="importJSON(event)">
+        </label>
+        <button class="btn-settings" style="background:#b45309;" onclick="loadDemoData()">🔄 تحميل بيانات يوم 2026/11/18 التجريبية</button>
+        <button class="btn-settings" style="background:#b91c1c;" onclick="resetAllData()">🗑️ تصفير كل الحركات</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal 1: Base Capital Settings -->
+  <div class="modal-backdrop" id="baseModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>⚙️ ضبط الرصيد الأساسي (رأس المال الثابت أول المدة)</h3>
+        <button class="modal-close" onclick="closeModal('baseModal')">✕</button>
+      </div>
+      <p style="font-size:0.84rem; color:var(--muted); margin-bottom:12px;">
+        أدخل رأس المال الأساسي لكل حساب مرة واحدة (بما في ذلك رصيد البداية لحساب <strong>إنستا باي</strong>)، وسيقوم النظام بالترحيل التلقائي بين الأيام بعد ذلك:
+      </p>
+      <div id="baseInputsContainer">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">مكسب (ماكينة)</label>
+          <input type="number" id="base_inp_maksab" class="audit-input" style="width:160px;" value="10000" step="any">
+        </div>
+      
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">فوري (ماكينة)</label>
+          <input type="number" id="base_inp_fawry" class="audit-input" style="width:160px;" value="5000" step="any">
+        </div>
+      
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">أمان (ماكينة)</label>
+          <input type="number" id="base_inp_aman" class="audit-input" style="width:160px;" value="3000" step="any">
+        </div>
+      
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">فودافون كاش (محفظة)</label>
+          <input type="number" id="base_inp_vfcash" class="audit-input" style="width:160px;" value="65000" step="any">
+        </div>
+      
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">إنستا باي (إنستا باي)</label>
+          <input type="number" id="base_inp_instapay" class="audit-input" style="width:160px;" value="5000" step="any">
+        </div>
+      
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">كاش الدرج (الخزنة)</label>
+          <input type="number" id="base_inp_drawer" class="audit-input" style="width:160px;" value="10000" step="any">
+        </div>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn-submit" style="padding:11px 18px;" onclick="saveBaseCapital()">✅ حفظ الرصيد الأساسي</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Close Day & Physical Audit Comparison -->
+  <div class="modal-backdrop" id="closeDayModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🔒 تقفيل اليوم ومطابقة الرصيد الختامي والأساسي</h3>
+        <button class="modal-close" onclick="closeModal('closeDayModal')">✕</button>
+      </div>
+
+      <div id="closeDaySummaryBox" style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; padding:12px; margin-bottom:14px; font-size:0.88rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div><strong>تاريخ التقفيل:</strong> 2026-11-18 (الأربعاء)</div>
+          <div><strong>إجمالي الرصيد الأساسي:</strong> 98,000.00 ج.م</div>
+          <div><strong>الرصيد الافتتاحي لليوم:</strong> 98,000.00 ج.م</div>
+          <div><strong>الرصيد الختامي بالنظام:</strong> 98,030.50 ج.م</div>
+          <div style="color:#0f766e;"><strong>أرباح (عمولات) اليوم:</strong> +30.50 ج.م</div>
+          <div style="color:#1d4ed8;"><strong>الفرق الإجمالي عن الأساسي:</strong> +30.50 ج.م</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:0.9rem; margin-bottom:8px; color:var(--navy);">جرد الحسابات الفعلي (اكتب الرصيد الفعلي الموجود أمامك الآن لاكتشاف أي عجز):</h4>
+      <div class="audit-row" style="font-weight:800; background:#e2e8f0; padding:8px; border-radius:8px;">
+        <div>الحساب</div>
+        <div style="text-align:center;">الختامي بالنظام</div>
+        <div style="text-align:center;">الجرد الفعلي</div>
+        <div style="text-align:center;">الفرق (عجز/زيادة)</div>
+      </div>
+      <div id="auditRowsContainer">
+          <div class="audit-row">
+            <div style="font-weight:800;">مكسب</div>
+            <div style="text-align:center; font-weight:700;">9,815.50</div>
+            <div><input type="number" id="actual_maksab" class="audit-input" value="9815.5" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_maksab" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        
+          <div class="audit-row">
+            <div style="font-weight:800;">فوري</div>
+            <div style="text-align:center; font-weight:700;">5,000.00</div>
+            <div><input type="number" id="actual_fawry" class="audit-input" value="5000" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_fawry" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        
+          <div class="audit-row">
+            <div style="font-weight:800;">أمان</div>
+            <div style="text-align:center; font-weight:700;">2,805.00</div>
+            <div><input type="number" id="actual_aman" class="audit-input" value="2805" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_aman" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        
+          <div class="audit-row">
+            <div style="font-weight:800;">فودافون كاش</div>
+            <div style="text-align:center; font-weight:700;">64,150.00</div>
+            <div><input type="number" id="actual_vfcash" class="audit-input" value="64150" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_vfcash" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        
+          <div class="audit-row">
+            <div style="font-weight:800;">إنستا باي</div>
+            <div style="text-align:center; font-weight:700;">5,000.00</div>
+            <div><input type="number" id="actual_instapay" class="audit-input" value="5000" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_instapay" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        
+          <div class="audit-row">
+            <div style="font-weight:800;">كاش الدرج</div>
+            <div style="text-align:center; font-weight:700;">11,260.00</div>
+            <div><input type="number" id="actual_drawer" class="audit-input" value="11260" step="any" oninput="recalcPhysicalAudit()"></div>
+            <div id="diff_drawer" style="text-align:center; font-weight:800; color:#15803d;">✓ متطابق</div>
+          </div>
+        </div>
+
+      <div id="totalAuditDiffBox" style="margin-top: 12px; padding: 10px; border-radius: 10px; font-weight: 800; text-align: center; background: rgb(220, 252, 231); color: rgb(22, 101, 52);">✅ الجرد الفعلي متطابق 100% مع حسابات اليوم — لا يوجد أي عجز أو زيادة</div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-submit" style="flex:1;" onclick="copyWhatsAppSummary()">📲 نسخ ملخص التقفيل للواتساب</button>
+        <button class="btn-settings" style="padding:12px 16px;" onclick="closeModal('closeDayModal')">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastBox" style="display: none;">✅ تم تسجيل العملية وتحديث الأرصدة</div>
+
+  <script>
+    const ACCOUNTS = [
+      { id: 'maksab', name: 'مكسب', type: 'pos', tag: 'ماكينة', tagClass: 'tag-pos', minAlert: 500 },
+      { id: 'fawry', name: 'فوري', type: 'pos', tag: 'ماكينة', tagClass: 'tag-pos', minAlert: 500 },
+      { id: 'aman', name: 'أمان', type: 'pos', tag: 'ماكينة', tagClass: 'tag-pos', minAlert: 500 },
+      { id: 'vfcash', name: 'فودافون كاش', type: 'wallet', tag: 'محفظة', tagClass: 'tag-wallet', minAlert: 2000 },
+      { id: 'instapay', name: 'إنستا باي', type: 'wallet', tag: 'إنستا باي', tagClass: 'tag-wallet', minAlert: 1000 },
+      { id: 'drawer', name: 'كاش الدرج', type: 'drawer', tag: 'الخزنة', tagClass: 'tag-drawer', minAlert: 1000 }
+    ];
+
+    const DEFAULT_BASE = {
+      maksab: 7758,
+      fawry: 137,
+      aman: 2128,
+      vfcash: 66453,
+      instapay: 0,
+      drawer: 9300
+    };
+
+    const DEMO_TRANSACTIONS = [
+      { id: 1, date: '2026-11-18', service: 'aman', op: 'كهرباء', amount: 195, comm: 5, pay: 'cash', phone: '', note: '' },
+      { id: 2, date: '2026-11-18', service: 'maksab', op: 'باقة', amount: 22.5, comm: 2.5, pay: 'cash', phone: '', note: '' },
+      { id: 3, date: '2026-11-18', service: 'maksab', op: 'باقة', amount: 22.5, comm: 2.5, pay: 'cash', phone: '', note: '' },
+      { id: 4, date: '2026-11-18', service: 'maksab', op: 'باقة', amount: 65, comm: 5, pay: 'cash', phone: '', note: '' },
+      { id: 5, date: '2026-11-18', service: 'maksab', op: 'باقة', amount: 52, comm: 3, pay: 'cash', phone: '', note: '' },
+      { id: 6, date: '2026-11-18', service: 'maksab', op: 'باقة', amount: 22.5, comm: 2.5, pay: 'cash', phone: '', note: '' },
+      { id: 7, date: '2026-11-18', service: 'vfcash', op: 'تحويل صادر', amount: 400, comm: 5, pay: 'cash', phone: '01008235456', note: 'أمير' },
+      { id: 8, date: '2026-11-18', service: 'vfcash', op: 'تحويل صادر', amount: 650, comm: 0, pay: 'cash', phone: '01008235456', note: 'أمير' },
+      { id: 9, date: '2026-11-18', service: 'vfcash', op: 'سحب وارد', amount: 200, comm: 5, pay: 'cash', phone: '01008235456', note: 'أمير' }
+    ];
+
+    const STORAGE_KEY = 'first_group_pos_ledger_v1';
+
+    let state = loadState();
+    let selectedService = 'maksab';
+    let selectedOp = 'شحن / فاتورة';
+    let selectedPay = 'cash';
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+      return {
+        baseCapital: { ...DEFAULT_BASE },
+        transactions: [...DEMO_TRANSACTIONS],
+        credits: []
+      };
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toastBox');
+      el.textContent = msg;
+      el.style.display = 'block';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => { el.style.display = 'none'; }, 2800);
+    }
+
+    function fmt(n) {
+      return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function initDate() {
+      const dateInput = document.getElementById('currentDate');
+      dateInput.value = '2026-11-18';
+    }
+
+    function goToday() {
+      const now = new Date();
+      const iso = now.toISOString().split('T')[0];
+      document.getElementById('currentDate').value = iso;
+      renderAll();
+    }
+
+    function changeDay(delta) {
+      const inp = document.getElementById('currentDate');
+      const d = new Date(inp.value + 'T00:00:00');
+      d.setDate(d.getDate() + delta);
+      inp.value = d.toISOString().split('T')[0];
+      renderAll();
+    }
+
+    function getArabicDayName(dateStr) {
+      const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      const d = new Date(dateStr + 'T00:00:00');
+      return isNaN(d.getTime()) ? '' : days[d.getDay()];
+    }
+
+    // Core Accounting Engine: Carry-Forward & Daily Balances
+    function computeLedgerForDate(targetDate) {
+      const openBal = { ...state.baseCapital };
+      const closeBal = { ...state.baseCapital };
+      const dayComm = { maksab: 0, fawry: 0, aman: 0, vfcash: 0, instapay: 0, drawer: 0 };
+      let dayExpenses = 0;
+      let dayOwnerDraw = 0;
+      let dayCreditAdded = 0;
+
+      // Sort transactions chronologically
+      const sorted = [...state.transactions].sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id);
+
+      sorted.forEach(tx => {
+        if (tx.date > targetDate) return;
+
+        const isBefore = tx.date < targetDate;
+        const isToday = tx.date === targetDate;
+        const amt = Number(tx.amount || 0);
+        const comm = Number(tx.comm || 0);
+        const isCash = tx.pay === 'cash';
+
+        let deltaAcc = 0;
+        let deltaDrawer = 0;
+
+        if (tx.service === 'drawer') {
+          if (tx.op === 'تحصيل نقدي') {
+            deltaDrawer = -amt;
+            if (isToday) dayOwnerDraw += amt;
+          } else if (tx.op === 'مصروف تشغيل') {
+            deltaDrawer = -amt;
+            if (isToday) dayExpenses += amt;
+          }
+        } else if (tx.op === 'إضافة رصيد') {
+          deltaAcc = amt;
+          deltaDrawer = -amt;
+        } else if (tx.op === 'تحويل صادر') {
+          deltaAcc = -amt;
+          deltaDrawer = isCash ? (amt + comm) : 0;
+        } else if (tx.op === 'سحب وارد') {
+          deltaAcc = amt;
+          deltaDrawer = isCash ? (-amt + comm) : 0;
+        } else {
+          // POS sale (شحن / فاتورة / باقة / كهرباء)
+          deltaAcc = -amt;
+          deltaDrawer = isCash ? (amt + comm) : 0;
+        }
+
+        if (isBefore) {
+          if (tx.service !== 'drawer') openBal[tx.service] += deltaAcc;
+          openBal.drawer += deltaDrawer;
+        }
+
+        if (tx.service !== 'drawer') closeBal[tx.service] += deltaAcc;
+        closeBal.drawer += deltaDrawer;
+
+        if (isToday) {
+          if (tx.service !== 'drawer') dayComm[tx.service] += comm;
+          if (!isCash && tx.op !== 'سحب وارد') dayCreditAdded += (amt + comm);
+        }
+      });
+
+      // Add collected credit payments back to drawer
+      state.credits.forEach(cr => {
+        if (cr.paid && cr.paidDate) {
+          if (cr.paidDate < targetDate) openBal.drawer += Number(cr.amount);
+          if (cr.paidDate <= targetDate) closeBal.drawer += Number(cr.amount);
+        }
+      });
+
+      const totalBase = Object.values(state.baseCapital).reduce((s, v) => s + Number(v || 0), 0);
+      const totalOpen = Object.values(openBal).reduce((s, v) => s + v, 0);
+      const totalClose = Object.values(closeBal).reduce((s, v) => s + v, 0);
+      const totalDayComm = Object.values(dayComm).reduce((s, v) => s + v, 0);
+      const unpaidCredits = state.credits.filter(c => !c.paid).reduce((s, c) => s + Number(c.amount || 0), 0);
+
+      // Expected closing = opening + today's commissions - today's expenses - owner cash draw - today's unpaid credit
+      const expectedClose = totalOpen + totalDayComm - dayExpenses - dayOwnerDraw - dayCreditAdded;
+      const discrepancy = Number((totalClose - expectedClose).toFixed(2));
+      const diffFromBase = Number(((totalClose + unpaidCredits) - totalBase).toFixed(2));
+
+      return {
+        openBal,
+        closeBal,
+        dayComm,
+        totalBase,
+        totalOpen,
+        totalClose,
+        totalDayComm,
+        dayExpenses,
+        dayOwnerDraw,
+        unpaidCredits,
+        discrepancy,
+        diffFromBase
+      };
+    }
+
+    function renderServiceButtons() {
+      const container = document.getElementById('serviceButtons');
+      container.innerHTML = ACCOUNTS.map(acc => {
+        const isSel = selectedService === acc.id;
+        return `<button type="button" class="push-btn ${isSel ? 'active' : ''}" onclick="selectService('${acc.id}')">${acc.name}</button>`;
+      }).join('');
+    }
+
+    function selectService(srvId) {
+      selectedService = srvId;
+      const acc = ACCOUNTS.find(a => a.id === srvId);
+      if (acc.type === 'pos') selectedOp = 'شحن / فاتورة';
+      else if (acc.type === 'wallet') selectedOp = 'تحويل صادر';
+      else selectedOp = 'تحصيل نقدي';
+
+      renderServiceButtons();
+      renderOpButtons();
+      updateExplain();
+      renderAccountsGrid();
+    }
+
+    function renderOpButtons() {
+      const acc = ACCOUNTS.find(a => a.id === selectedService);
+      let ops = [];
+      if (acc.type === 'pos') {
+        ops = ['شحن / فاتورة', 'باقة', 'كهرباء', 'إضافة رصيد'];
+      } else if (acc.type === 'wallet') {
+        ops = ['تحويل صادر', 'سحب وارد', 'إضافة رصيد'];
+      } else {
+        ops = ['تحصيل نقدي', 'مصروف تشغيل'];
+      }
+
+      const container = document.getElementById('opButtons');
+      container.innerHTML = ops.map(op => {
+        const isSel = selectedOp === op;
+        return `<button type="button" class="push-btn ${isSel ? 'active-blue' : ''}" onclick="selectOp('${op}')">${op}</button>`;
+      }).join('');
+    }
+
+    function selectOp(op) {
+      selectedOp = op;
+      renderOpButtons();
+      updateExplain();
+    }
+
+    function addAmount(val) {
+      const el = document.getElementById('txAmount');
+      el.value = (Number(el.value || 0) + val);
+      updateExplain();
+    }
+
+    function setAmount(val) {
+      document.getElementById('txAmount').value = val === 0 ? '' : val;
+      updateExplain();
+    }
+
+    function setComm(val) {
+      document.getElementById('txComm').value = val;
+      updateExplain();
+    }
+
+    function setPayMethod(method) {
+      selectedPay = method;
+      document.getElementById('payCashBtn').className = 'push-btn ' + (method === 'cash' ? 'active' : '');
+      document.getElementById('payCreditBtn').className = 'push-btn ' + (method === 'credit' ? 'active-amber' : '');
+      updateExplain();
+    }
+
+    function updateExplain() {
+      const acc = ACCOUNTS.find(a => a.id === selectedService);
+      const amt = Number(document.getElementById('txAmount').value || 0);
+      const comm = Number(document.getElementById('txComm').value || 0);
+      const banner = document.getElementById('explainBanner');
+
+      if (amt <= 0) {
+        banner.innerHTML = `💡 محدد الآن: <strong>${acc.name}</strong> (${selectedOp}) — أدخل المبلغ لحساب التأثير التلقائي.`;
+        return;
+      }
+
+      if (acc.id === 'drawer') {
+        banner.innerHTML = `💡 سيتم خصم <strong>${fmt(amt)} ج.م</strong> من <strong>كاش الدرج</strong> (${selectedOp}).`;
+      } else if (selectedOp === 'إضافة رصيد') {
+        banner.innerHTML = `💡 تغذية رصيد: يزيد رصيد <strong>${acc.name}</strong> بمقدار <strong>${fmt(amt)} ج.م</strong> ويُخصم <strong>${fmt(amt)} ج.م</strong> من كاش الدرج.`;
+      } else if (selectedOp === 'تحويل صادر') {
+        banner.innerHTML = selectedPay === 'cash'
+          ? `💡 تحويل صادر: يُخصم <strong>${fmt(amt)} ج.م</strong> من <strong>${acc.name}</strong>، ويدخل <strong>${fmt(amt + comm)} ج.م</strong> إلى كاش الدرج.`
+          : `💡 تحويل صادر (آجل): يُخصم <strong>${fmt(amt)} ج.م</strong> من <strong>${acc.name}</strong>، ويُسجل <strong>${fmt(amt + comm)} ج.م</strong> دينًا على العميل.`;
+      } else if (selectedOp === 'سحب وارد') {
+        banner.innerHTML = `💡 سحب وارد: يزيد رصيد <strong>${acc.name}</strong> بمقدار <strong>${fmt(amt)} ج.م</strong>، ويخرج صافي <strong>${fmt(amt - comm)} ج.م</strong> كاش من الدرج.`;
+      } else {
+        banner.innerHTML = selectedPay === 'cash'
+          ? `💡 عملية ماكينة: يُخصم <strong>${fmt(amt)} ج.م</strong> من <strong>${acc.name}</strong>، ويدخل <strong>${fmt(amt + comm)} ج.م</strong> إلى كاش الدرج.`
+          : `💡 عملية ماكينة (آجل): يُخصم <strong>${fmt(amt)} ج.م</strong> من <strong>${acc.name}</strong>، ويُسجل <strong>${fmt(amt + comm)} ج.م</strong> في سجل الآجل.`;
+      }
+    }
+
+    function saveTransaction() {
+      const dateVal = document.getElementById('currentDate').value;
+      const amt = Number(document.getElementById('txAmount').value || 0);
+      const comm = Number(document.getElementById('txComm').value || 0);
+      const phone = document.getElementById('txPhone').value.trim();
+      const note = document.getElementById('txNote').value.trim();
+
+      if (!dateVal) {
+        showToast('⚠️ اختر التاريخ أولاً');
+        return;
+      }
+      if (amt <= 0) {
+        showToast('⚠️ أدخل مبلغ العملية أولاً');
+        return;
+      }
+      if (selectedPay === 'credit' && !note && !phone) {
+        showToast('⚠️ اكتب اسم العميل أو رقمه لتسجيل الآجل');
+        return;
+      }
+
+      const txId = Date.now();
+      state.transactions.push({
+        id: txId,
+        date: dateVal,
+        service: selectedService,
+        op: selectedOp,
+        amount: amt,
+        comm: comm,
+        pay: selectedPay,
+        phone: phone,
+        note: note
+      });
+
+      if (selectedPay === 'credit' && selectedService !== 'drawer' && selectedOp !== 'إضافة رصيد') {
+        const acc = ACCOUNTS.find(a => a.id === selectedService);
+        state.credits.push({
+          id: txId + 1,
+          date: dateVal,
+          customer: note || phone,
+          phone: phone,
+          desc: `${acc.name} - ${selectedOp}`,
+          amount: amt + comm,
+          paid: false,
+          paidDate: null
+        });
+      }
+
+      saveState();
+      document.getElementById('txAmount').value = '';
+      document.getElementById('txComm').value = '';
+      document.getElementById('txNote').value = '';
+      setPayMethod('cash');
+      renderAll();
+      showToast('✅ تم تسجيل العملية وتحديث الأرصدة');
+    }
+
+    function deleteTransaction(id) {
+      state.transactions = state.transactions.filter(t => t.id !== id);
+      saveState();
+      renderAll();
+      showToast('🗑️ تم حذف الحركة');
+    }
+
+    function settleCredit(id) {
+      const cr = state.credits.find(c => c.id === id);
+      if (!cr || cr.paid) return;
+      cr.paid = true;
+      cr.paidDate = document.getElementById('currentDate').value;
+      saveState();
+      renderAll();
+      showToast(`✅ تم تحصيل ${fmt(cr.amount)} ج.م وإضافتها لكاش الدرج`);
+    }
+
+    function renderAccountsGrid() {
+      const dateVal = document.getElementById('currentDate').value;
+      const calc = computeLedgerForDate(dateVal);
+      const grid = document.getElementById('accountsGrid');
+
+      grid.innerHTML = ACCOUNTS.map(acc => {
+        const openV = calc.openBal[acc.id] || 0;
+        const closeV = calc.closeBal[acc.id] || 0;
+        const netV = closeV - openV;
+        const isLow = closeV < acc.minAlert;
+        const isSel = selectedService === acc.id;
+
+        return `
+          <div class="acc-card ${isSel ? 'selected' : ''}" onclick="selectService('${acc.id}')">
+            <div class="acc-top">
+              <span class="acc-name">${acc.name}</span>
+              <span class="acc-tag ${acc.tagClass}">${acc.tag}</span>
+            </div>
+            <div class="acc-balance">${fmt(closeV)} <span style="font-size:0.75rem; font-weight:600;">ج.م</span></div>
+            <div class="acc-meta">
+              <span>افتتاحي: ${fmt(openV)}</span>
+              <span style="color:${netV >= 0 ? '#15803d' : '#b91c1c'}; font-weight:700;">${netV >= 0 ? '+' : ''}${fmt(netV)}</span>
+            </div>
+            ${isLow ? `<div class="low-alert">⚠️ رصيد منخفض (أقل من ${acc.minAlert})</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      const dateVal = document.getElementById('currentDate').value;
+      document.getElementById('dayNameBadge').textContent = getArabicDayName(dateVal);
+
+      const calc = computeLedgerForDate(dateVal);
+
+      // Update Top 4 Comparison Cards
+      document.getElementById('kpiBaseTotal').textContent = `${fmt(calc.totalBase)} ج.م`;
+      document.getElementById('kpiOpenTotal').textContent = `${fmt(calc.totalOpen)} ج.م`;
+      document.getElementById('kpiCloseTotal').textContent = `${fmt(calc.totalClose)} ج.م`;
+      document.getElementById('kpiProfitBadge').textContent = `+${fmt(calc.totalDayComm)} عمولة اليوم`;
+      document.getElementById('kpiCreditNote').textContent = `الآجل غير المحصل: ${fmt(calc.unpaidCredits)} ج.م`;
+
+      const auditCard = document.getElementById('kpiAuditCard');
+      const auditStatus = document.getElementById('kpiAuditStatus');
+      const baseDiffEl = document.getElementById('kpiBaseDiff');
+
+      if (Math.abs(calc.discrepancy) < 0.01) {
+        auditCard.classList.remove('has-diff');
+        auditStatus.style.color = '#15803d';
+        auditStatus.textContent = '✓ سليم 100% — لا يوجد عجز';
+      } else {
+        auditCard.classList.add('has-diff');
+        auditStatus.style.color = '#b91c1c';
+        auditStatus.textContent = `⚠️ يوجد فرق: ${fmt(calc.discrepancy)} ج.م`;
+      }
+      baseDiffEl.textContent = `نمو رأس المال عن الأساسي: ${calc.diffFromBase >= 0 ? '+' : ''}${fmt(calc.diffFromBase)} ج.م`;
+
+      renderAccountsGrid();
+      renderLogTable(dateVal);
+      renderCreditTable();
+      renderReportTable(dateVal, calc);
+    }
+
+    function renderLogTable(dateVal) {
+      const todayTxs = state.transactions.filter(t => t.date === dateVal);
+      document.getElementById('todayCountBadge').textContent = todayTxs.length;
+      const tbody = document.getElementById('logTableBody');
+
+      if (todayTxs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="padding:18px; color:var(--muted); font-weight:700;">لا توجد حركات مسجلة في هذا اليوم بعد — استخدم الأزرار بالأعلى للتسجيل.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = todayTxs.map((tx, idx) => {
+        const acc = ACCOUNTS.find(a => a.id === tx.service);
+        const amt = Number(tx.amount);
+        const comm = Number(tx.comm);
+        let drawerImpact = 0;
+        if (tx.service === 'drawer') drawerImpact = -amt;
+        else if (tx.op === 'إضافة رصيد') drawerImpact = -amt;
+        else if (tx.op === 'سحب وارد') drawerImpact = tx.pay === 'cash' ? (-amt + comm) : 0;
+        else drawerImpact = tx.pay === 'cash' ? (amt + comm) : 0;
+
+        return `
+          <tr>
+            <td>${idx + 1}</td>
+            <td style="font-weight:800;">${acc ? acc.name : tx.service}</td>
+            <td>${tx.op}</td>
+            <td style="font-weight:700;">${fmt(amt)}</td>
+            <td style="color:#0f766e; font-weight:700;">${fmt(comm)}</td>
+            <td>${tx.pay === 'cash' ? '💵 كاش' : '📝 آجل'}</td>
+            <td>${[tx.note, tx.phone].filter(Boolean).join(' - ') || '-'}</td>
+            <td class="${drawerImpact >= 0 ? 'pos-val' : 'neg-val'}">${drawerImpact >= 0 ? '+' : ''}${fmt(drawerImpact)}</td>
+            <td><button class="btn-del" onclick="deleteTransaction(${tx.id})">حذف</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderCreditTable() {
+      const unpaid = state.credits.filter(c => !c.paid);
+      document.getElementById('creditCountBadge').textContent = unpaid.length;
+      const tbody = document.getElementById('creditTableBody');
+
+      if (state.credits.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="padding:18px; color:var(--muted); font-weight:700;">لا توجد حسابات آجلة مسجلة.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = [...state.credits].reverse().map(cr => `
+        <tr>
+          <td>${cr.date}</td>
+          <td style="font-weight:800;">${cr.customer}</td>
+          <td>${cr.phone || '-'}</td>
+          <td>${cr.desc}</td>
+          <td style="font-weight:800;">${fmt(cr.amount)} ج.م</td>
+          <td>${cr.paid ? `<span style="color:#15803d; font-weight:700;">✓ مسدد (${cr.paidDate})</span>` : `<span style="color:#b91c1c; font-weight:700;">⏳ غير مسدد</span>`}</td>
+          <td>${cr.paid ? '-' : `<button class="btn-pay" onclick="settleCredit(${cr.id})">✅ تم السداد للدرج</button>`}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderReportTable(dateVal, calc) {
+      const tbody = document.getElementById('reportTableBody');
+      const mainServices = ACCOUNTS.filter(a => a.id !== 'drawer');
+
+      tbody.innerHTML = mainServices.map(acc => {
+        const todayItems = state.transactions.filter(t => t.date === dateVal && t.service === acc.id);
+        const allItems = state.transactions.filter(t => t.service === acc.id);
+        const todayVol = todayItems.reduce((s, t) => s + Number(t.amount || 0), 0);
+        const allComm = allItems.reduce((s, t) => s + Number(t.comm || 0), 0);
+
+        return `
+          <tr>
+            <td style="font-weight:800;">${acc.name}</td>
+            <td>${todayItems.length}</td>
+            <td>${fmt(todayVol)} ج.م</td>
+            <td style="color:#0f766e; font-weight:800;">${fmt(calc.dayComm[acc.id] || 0)} ج.م</td>
+            <td style="font-weight:800;">${fmt(allComm)} ج.م</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Modal 1: Base Capital Setup
+    function openBaseModal() {
+      const container = document.getElementById('baseInputsContainer');
+      container.innerHTML = ACCOUNTS.map(acc => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+          <label style="font-weight:800;">${acc.name} (${acc.tag})</label>
+          <input type="number" id="base_inp_${acc.id}" class="audit-input" style="width:160px;" value="${state.baseCapital[acc.id] || 0}" step="any" />
+        </div>
+      `).join('');
+      document.getElementById('baseModal').classList.add('open');
+    }
+
+    function saveBaseCapital() {
+      ACCOUNTS.forEach(acc => {
+        const val = Number(document.getElementById(`base_inp_${acc.id}`).value || 0);
+        state.baseCapital[acc.id] = val;
+      });
+      saveState();
+      closeModal('baseModal');
+      renderAll();
+      showToast('✅ تم تحديث الرصيد الأساسي وإعادة حساب الترحيل');
+    }
+
+    // Modal 2: Close Day & Shortage Comparison
+    function openCloseDayModal() {
+      const dateVal = document.getElementById('currentDate').value;
+      const calc = computeLedgerForDate(dateVal);
+
+      document.getElementById('closeDaySummaryBox').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div><strong>تاريخ التقفيل:</strong> ${dateVal} (${getArabicDayName(dateVal)})</div>
+          <div><strong>إجمالي الرصيد الأساسي:</strong> ${fmt(calc.totalBase)} ج.م</div>
+          <div><strong>الرصيد الافتتاحي لليوم:</strong> ${fmt(calc.totalOpen)} ج.م</div>
+          <div><strong>الرصيد الختامي بالنظام:</strong> ${fmt(calc.totalClose)} ج.م</div>
+          <div style="color:#0f766e;"><strong>أرباح (عمولات) اليوم:</strong> +${fmt(calc.totalDayComm)} ج.م</div>
+          <div style="color:#1d4ed8;"><strong>الفرق الإجمالي عن الأساسي:</strong> ${calc.diffFromBase >= 0 ? '+' : ''}${fmt(calc.diffFromBase)} ج.م</div>
+        </div>
+      `;
+
+      const container = document.getElementById('auditRowsContainer');
+      container.innerHTML = ACCOUNTS.map(acc => {
+        const sysVal = calc.closeBal[acc.id] || 0;
+        return `
+          <div class="audit-row">
+            <div style="font-weight:800;">${acc.name}</div>
+            <div style="text-align:center; font-weight:700;">${fmt(sysVal)}</div>
+            <div><input type="number" id="actual_${acc.id}" class="audit-input" value="${sysVal}" step="any" oninput="recalcPhysicalAudit()" /></div>
+            <div id="diff_${acc.id}" style="text-align:center; font-weight:800; color:#15803d;">0.00</div>
+          </div>
+        `;
+      }).join('');
+
+      recalcPhysicalAudit();
+      document.getElementById('closeDayModal').classList.add('open');
+    }
+
+    function recalcPhysicalAudit() {
+      const dateVal = document.getElementById('currentDate').value;
+      const calc = computeLedgerForDate(dateVal);
+      let totalDiff = 0;
+
+      ACCOUNTS.forEach(acc => {
+        const sysVal = calc.closeBal[acc.id] || 0;
+        const actVal = Number(document.getElementById(`actual_${acc.id}`).value || 0);
+        const diff = Number((actVal - sysVal).toFixed(2));
+        totalDiff += diff;
+
+        const diffEl = document.getElementById(`diff_${acc.id}`);
+        if (Math.abs(diff) < 0.01) {
+          diffEl.style.color = '#15803d';
+          diffEl.textContent = '✓ متطابق';
+        } else if (diff < 0) {
+          diffEl.style.color = '#b91c1c';
+          diffEl.textContent = `عجز ${fmt(diff)}`;
+        } else {
+          diffEl.style.color = '#1d4ed8';
+          diffEl.textContent = `زيادة +${fmt(diff)}`;
+        }
+      });
+
+      const box = document.getElementById('totalAuditDiffBox');
+      if (Math.abs(totalDiff) < 0.01) {
+        box.style.background = '#dcfce7';
+        box.style.color = '#166534';
+        box.textContent = '✅ الجرد الفعلي متطابق 100% مع حسابات اليوم — لا يوجد أي عجز أو زيادة';
+      } else if (totalDiff < 0) {
+        box.style.background = '#fee2e2';
+        box.style.color = '#991b1b';
+        box.textContent = `⚠️ تنبيه: يوجد إجمالي عجز في الجرد الفعلي بمقدار ${fmt(totalDiff)} ج.م`;
+      } else {
+        box.style.background = '#dbeafe';
+        box.style.color = '#1e40af';
+        box.textContent = `ℹ️ يوجد إجمالي زيادة في الجرد الفعلي بمقدار +${fmt(totalDiff)} ج.م`;
+      }
+    }
+
+    function copyWhatsAppSummary() {
+      const dateVal = document.getElementById('currentDate').value;
+      const calc = computeLedgerForDate(dateVal);
+      const lines = [
+        `📊 *تقفيل يومية المحل — ${dateVal} (${getArabicDayName(dateVal)})*`,
+        `🏛️ الرصيد الأساسي: ${fmt(calc.totalBase)} ج.م`,
+        `🌅 الرصيد الافتتاحي: ${fmt(calc.totalOpen)} ج.م`,
+        `🌇 الرصيد الختامي: ${fmt(calc.totalClose)} ج.م`,
+        `💰 عمولات اليوم: +${fmt(calc.totalDayComm)} ج.م`,
+        `-------------------`,
+        ...ACCOUNTS.map(a => `• ${a.name}: ${fmt(calc.closeBal[a.id])} ج.م`)
+      ];
+      navigator.clipboard.writeText(lines.join('\n')).then(() => {
+        showToast('📲 تم نسخ ملخص التقفيل — الصقه في واتساب الآن');
+      });
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function exportCSV() {
+      const headers = ['التاريخ', 'الخدمة', 'نوع العملية', 'المبلغ', 'العمولة', 'طريقة السداد', 'الرقم', 'ملاحظات'];
+      const rows = state.transactions.map(t => {
+        const acc = ACCOUNTS.find(a => a.id === t.service);
+        return [t.date, acc ? acc.name : t.service, t.op, t.amount, t.comm, t.pay === 'cash' ? 'كاش' : 'آجل', t.phone, t.note];
+      });
+      const csv = '\uFEFF' + [headers, ...rows].map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `يومية_المحل_${document.getElementById('currentDate').value}.csv`;
+      a.click();
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `نسخة_احتياطية_يومية_المحل_${document.getElementById('currentDate').value}.json`;
+      a.click();
+    }
+
+    function importJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed.baseCapital && Array.isArray(parsed.transactions)) {
+            state = parsed;
+            saveState();
+            renderAll();
+            showToast('✅ تم استرجاع النسخة الاحتياطية بنجاح');
+          }
+        } catch (err) {
+          showToast('⚠️ ملف النسخة الاحتياطية غير صالح');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function loadDemoData() {
+      state = {
+        baseCapital: { ...DEFAULT_BASE },
+        transactions: [...DEMO_TRANSACTIONS],
+        credits: []
+      };
+      saveState();
+      document.getElementById('currentDate').value = '2026-11-18';
+      renderAll();
+      showToast('🔄 تم تحميل بيانات يوم 2026/11/18 التجريبية');
+    }
+
+    function resetAllData() {
+      if (!confirm('هل أنت متأكد من مسح جميع الحركات والبدء بسجل فارغ؟')) return;
+      state.transactions = [];
+      state.credits = [];
+      saveState();
+      renderAll();
+      showToast('🗑️ تم تصفير الحركات');
+    }
+
+    // Boot
+    initDate();
+    renderServiceButtons();
+    renderOpButtons();
+    updateExplain();
+    renderAll();
+  </script>
+
+
+</body></html>
